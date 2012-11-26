@@ -4,6 +4,7 @@ import sys
 sys.argv.append( '-b' )
 import ROOT
 
+from collections import OrderedDict
 from PlotMaker.PlotMaker import PlotMaker
 
 
@@ -18,10 +19,11 @@ def hist_name(channel, systematic="default", name="Jet_N_0_6i_20GeV"):
 def main():
 
     pm = PlotMaker("PlotMaker", "Plot Maker")
-    pm.SetLegendBoundaries( .75, .65, .95, .90 )
+    pm.SetLegendBoundaries( .75, .55, .95, .90 )
 
     input_file = "dilepton2010_modified/data/TopHistograms.root"
 
+    # Add the samples for data, signal, and background
     pm.AddDataSample(files=input_file, name="Data", title="data10 (7TeV)")
 
     pm.AddMCSample(files=input_file, name="tbart", title="t #bar{t}", signal=True, Scale=200)
@@ -41,7 +43,7 @@ def main():
         pm.MakeMCDataStack(input_name, output_name)
 
     # Make plots showing the effects of systematic uncertainties
-    sample_sys_map = {}
+    sample_sys_map = OrderedDict()
     all_sys = ['jes', 'ees'] # 'isrfsr',, 'mcmodel' 
     for sample in ['tbart', 'Zll', 'Ztautau', 'SingleTop']:
         sample_sys_map[sample] = all_sys
@@ -50,19 +52,18 @@ def main():
 
     # Draw the systematic shifts for each sample
     for channel in ['ee', 'emu', 'mumu']:
+
+        # Create a canvas with 6 sub-pads
         canvas = ROOT.TCanvas("Canvas", "Canvas")
         canvas.Divide(2, 3)
-        print "Total Canvas: ", canvas
         objects_on_canvas = []
+
+        # Draw the 6 samples on the subpads with their systematic shifts
         for itr, (sample, sys_list) in enumerate(sample_sys_map.iteritems()):
             canvas.cd(itr+1)
-            #pad_cd = ROOT.gPad.cd()
-            #print "Current Pad: ", ROOT.gPad, " Selected: ", ROOT.gPad.GetSelected(), " Canvas: ", ROOT.gPad.GetCanvas(), " after cd: ", pad_cd
-            hist_list = []
-            name_list = []
             default_name = hist_name(channel)
-            hist_list.append(default_name)
-            name_list.append("default")
+            hist_list = [default_name]
+            name_list = ['default']
             for systematic in sys_list:
                 for suffix in ['_minus', '_plus']:        
                     input_name = hist_name(channel, systematic+suffix)
@@ -70,16 +71,15 @@ def main():
                     name_list.append(systematic+suffix)
             objects = pm.MakeMultipleVariablePlot(hist_list, sample, nameList=name_list,
                                                 UseCurrentCanvas=True, RatioPlot=True)
-            title = ROOT.TPaveText(0.4,0.75, 0.6,0.90, "NDC")
-            title.SetFillColor(0);
-            title.SetBorderSize(0)
-            title.SetTextSize(0.08);
-            title.AddText(sample)
-            title.Draw();
+            title = pm.DrawText(sample)
+            # Save all objects
             objects_on_canvas.append(objects)
             objects_on_canvas.append(title)
+
+        # Save and clear the canvas
         canvas.Print("Plots/" + channel + "_systematics.pdf")
         canvas.Clear()
+        del canvas
 
 
 if __name__ == "__main__":
