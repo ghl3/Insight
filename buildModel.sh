@@ -1,3 +1,3 @@
 
 
-hist2workspace config/
+hist2workspace config/top_dilep.xml

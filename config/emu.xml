@@ -16,7 +16,7 @@
 <!DOCTYPE Channel  SYSTEM 'HistFactorySchema.dtd'>
 
 
-  <Channel Name="emu" InputFile="./data/Histograms.root" HistoName="Jet_N_2_2i_20GeV">
+  <Channel Name="emu" InputFile="./data/TopHistograms.root" HistoName="Jet_N_2_2i_20GeV">
 
     <Data HistoName="Jet_N_2_2i_20GeV" HistoPath="emu/Data/default/"/>
 
