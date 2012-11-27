@@ -13,7 +13,11 @@ def hist_name(channel, systematic="default", name="Jet_N_0_6i_20GeV"):
     return "%s/{{Sample}}/%s/%s" % (channel, systematic, name)
 
 
-def main():
+def top_plot_maker():
+    """ Create, configure, and return a PlotMaker
+    
+    Add the Data, signal, and backgrounds
+    """
 
     pm = PlotMaker("PlotMaker", "Plot Maker")
     pm.SetLegendBoundaries( .75, .55, .95, .90 )
@@ -31,6 +35,14 @@ def main():
     pm.AddMCSample(files=input_file, name="Fake", title="Fake", color=color_map['Fake'])
     #pm.AddMCSample(files=input_file, name="W", title="W", color=color_map['W'])
     #pm.AddMCSample(files=input_file, name="Wbb", title="W #rightarrow bb", color=color_map['Wbb'])
+
+    return pm
+
+
+def main():
+
+    # Get the PlotMaker
+    pm = top_plot_maker()
 
     # Make the nominal MC/Data comparisons
     for channel in ['ee', 'emu', 'mumu']:
