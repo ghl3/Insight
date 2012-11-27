@@ -7,12 +7,9 @@ import ROOT
 from collections import OrderedDict
 from PlotMaker.PlotMaker import PlotMaker
 
+from common import color_map
 
 def hist_name(channel, systematic="default", name="Jet_N_0_6i_20GeV"):
-    """ A quick helper to return the name of a histogram
-    
-    This name is based on the format of the current ROOT file
-    """
     return "%s/{{Sample}}/%s/%s" % (channel, systematic, name)
 
 
@@ -21,19 +18,19 @@ def main():
     pm = PlotMaker("PlotMaker", "Plot Maker")
     pm.SetLegendBoundaries( .75, .55, .95, .90 )
 
-    input_file = "dilepton2010_modified/data/TopHistograms.root"
+    input_file = "data/TopHistograms.root"
 
     # Add the samples for data, signal, and background
     pm.AddDataSample(files=input_file, name="Data", title="data10 (7TeV)")
 
     pm.AddMCSample(files=input_file, name="tbart", title="t #bar{t}", signal=True, Scale=200)
-    pm.AddMCSample(files=input_file, name="Zll", title="Z #rightarrow ll", color=37)
-    pm.AddMCSample(files=input_file, name="W", title="W", color=38)
-    pm.AddMCSample(files=input_file, name="Wbb", title="W #rightarrow bb", color=39)
-    pm.AddMCSample(files=input_file, name="Ztautau", title="Z #rightarrow #tau #tau", color=40)
-    pm.AddMCSample(files=input_file, name="Diboson", title="Diboson", color=41)
-    pm.AddMCSample(files=input_file, name="SingleTop", title="Single Top", color=42)
-    pm.AddMCSample(files=input_file, name="Fake", title="Fakes", color=43)
+    pm.AddMCSample(files=input_file, name="Zll", title="Z #rightarrow ll", color=color_map['Zll'])
+    pm.AddMCSample(files=input_file, name="Ztautau", title="Z #rightarrow #tau #tau", color=color_map['Ztautau'])
+    pm.AddMCSample(files=input_file, name="Diboson", title="Diboson", color=color_map['Diboson'])
+    pm.AddMCSample(files=input_file, name="SingleTop", title="Single Top", color=color_map['SingleTop'])
+    pm.AddMCSample(files=input_file, name="Fake", title="Fake", color=color_map['Fake'])
+    #pm.AddMCSample(files=input_file, name="W", title="W", color=color_map['W'])
+    #pm.AddMCSample(files=input_file, name="Wbb", title="W #rightarrow bb", color=color_map['Wbb'])
 
     # Make the nominal MC/Data comparisons
     for channel in ['ee', 'emu', 'mumu']:
@@ -44,8 +41,8 @@ def main():
 
     # Make plots showing the effects of systematic uncertainties
     sample_sys_map = OrderedDict()
-    all_sys = ['jes', 'ees'] # 'isrfsr',, 'mcmodel' 
-    for sample in ['tbart', 'Zll', 'Ztautau', 'SingleTop']:
+    all_sys = ['jes', 'ees']
+    for sample in ['tbart', 'Ztautau' ]:
         sample_sys_map[sample] = all_sys
     sample_sys_map["Diboson"] = ['jes', 'ees', 'mcmodel']
     sample_sys_map["Fake"] = ['jes', 'ees']
@@ -55,7 +52,7 @@ def main():
 
         # Create a canvas with 6 sub-pads
         canvas = ROOT.TCanvas("Canvas", "Canvas")
-        canvas.Divide(2, 3)
+        canvas.Divide(2, 2)
         objects_on_canvas = []
 
         # Draw the 6 samples on the subpads with their systematic shifts
@@ -64,15 +61,17 @@ def main():
             default_name = hist_name(channel)
             hist_list = [default_name]
             name_list = ['default']
+            color_list = [1]
             for systematic in sys_list:
                 for suffix in ['_minus', '_plus']:        
                     input_name = hist_name(channel, systematic+suffix)
                     hist_list.append(input_name)
                     name_list.append(systematic+suffix)
-            objects = pm.MakeMultipleVariablePlot(hist_list, sample, nameList=name_list,
-                                                UseCurrentCanvas=True, RatioPlot=True)
+                    color_list.append(34 + len(color_list))
+            objects = pm.MakeMultipleVariablePlot(hist_list, sample, 
+                                                  nameList=name_list, colorList=color_list,
+                                                  UseCurrentCanvas=True, RatioPlot=True)
             title = pm.DrawText(sample)
-            # Save all objects
             objects_on_canvas.append(objects)
             objects_on_canvas.append(title)
 
