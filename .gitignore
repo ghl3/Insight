@@ -1,7 +1,13 @@
 *.pyc
 *.pdf
+*.eps
 *.dot
 PlotMaker/
 dilepton2010/
 dilepton2012/
 results/
+*.dSYM
+backup
+
+StandardBayesianMCMCDemo
+StandardProfileInspectorDemo
