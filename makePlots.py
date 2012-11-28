@@ -9,6 +9,7 @@ from PlotMaker.PlotMaker import PlotMaker
 
 from common import color_map
 
+
 def hist_name(channel, systematic="default", name="Jet_N_0_6i_20GeV"):
     return "%s/{{Sample}}/%s/%s" % (channel, systematic, name)
 
@@ -33,8 +34,6 @@ def top_plot_maker():
     pm.AddMCSample(files=input_file, name="Diboson", title="Diboson", color=color_map['Diboson'])
     pm.AddMCSample(files=input_file, name="SingleTop", title="Single Top", color=color_map['SingleTop'])
     pm.AddMCSample(files=input_file, name="Fake", title="Fake", color=color_map['Fake'])
-    #pm.AddMCSample(files=input_file, name="W", title="W", color=color_map['W'])
-    #pm.AddMCSample(files=input_file, name="Wbb", title="W #rightarrow bb", color=color_map['Wbb'])
 
     return pm
 
@@ -53,9 +52,8 @@ def main():
 
     # Make plots showing the effects of systematic uncertainties
     sample_sys_map = OrderedDict()
-    all_sys = ['jes', 'ees']
-    for sample in ['tbart', 'Ztautau' ]:
-        sample_sys_map[sample] = all_sys
+    sample_sys_map["tbart"] = ['jes', 'ees', 'mcmodel']
+    sample_sys_map["Ztautau"] = ['jes', 'ees']
     sample_sys_map["Diboson"] = ['jes', 'ees', 'mcmodel']
     sample_sys_map["Fake"] = ['jes', 'ees']
 
@@ -84,8 +82,8 @@ def main():
                                                   nameList=name_list, colorList=color_list,
                                                   UseCurrentCanvas=True, RatioPlot=True)
             title = pm.DrawText(sample)
-            objects_on_canvas.append(objects)
-            objects_on_canvas.append(title)
+            objects_on_canvas.append((objects, title))
+            #objects_on_canvas.append(title)
 
         # Save and clear the canvas
         canvas.Print("Plots/" + channel + "_systematics.pdf")

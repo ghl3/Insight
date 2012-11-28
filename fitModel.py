@@ -8,7 +8,7 @@ from common import color_map
 
 from PlotMaker.style.AtlasStyle import AtlasStyle
 
-from makePlots import hist_name, top_plot_maker
+#from makePlots import hist_name, top_plot_maker
 
 
 def get_model():
@@ -17,11 +17,10 @@ def get_model():
     wspace = input_file.Get("combined")
     model = wspace.pdf("simPdf")
     data = wspace.data("obsData")
-    poi = wspace.var("SigXsecOverSM")
+    poi = wspace.var("TopCrossSection")
 
     return (wspace, model, data, poi)
     
-
 
 def main():
 
@@ -29,13 +28,6 @@ def main():
     ROOT.gROOT.SetStyle( style.GetName() )
 
     # Open the file and gather the necessary objects
-    '''
-    input_file = TFile("results/dilep_combined_allsys_model.root")
-    wspace = input_file.Get("combined")
-    model = wspace.pdf("simPdf")
-    data = wspace.data("obsData")
-    poi = wspace.var("SigXsecOverSM")
-    '''
 
     (wspace, model, data, poi) = get_model()
 

@@ -36,10 +36,17 @@ def main():
 
     # Do an initial fit and get the uncertainty
     model.fitTo(data, minos(poi))
+    val = poi.getVal()
     err_up = poi.getErrorHi()
     err_down = poi.getErrorLo()
 
     result_string = StringIO.StringIO()
+
+    string1 = "+{:.3f}/{:.3f}".format(err_up, err_down)
+    string2 = "(+{:.2%} / {:.2%})".format(err_up/val, err_down/val)
+
+    print >>result_string, ("Error On %s: " % poi.GetName()).rjust(30), "{:>10} {:>10}".format(string1, string2)
+    print >>result_string, ''
 
     # Get the Lumi Error
     wspace.var("Lumi").setConstant(True)
@@ -58,7 +65,10 @@ def main():
         model.fitTo(data, minos(poi))
         wspace.var(sys).setConstant(False)
         print >>result_string, ("Error On %s: " % sys).rjust(30), print_error(poi, err_up, err_down)
-        
+
+    print ''
+    print 'Fit results and uncertainties:'
+    print ''
     print result_string.getvalue()
 
 if __name__ == "__main__":

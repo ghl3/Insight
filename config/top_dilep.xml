@@ -8,7 +8,7 @@
   <Input>./config/mumu.xml</Input>
 
   <Measurement Name="allsys" Lumi="1" LumiRelErr="0.11" ExportOnly="True">
-    <POI>SigXsecOverSM</POI>
+    <POI>TopCrossSection</POI>
     <ParamSetting Const="True">TopFactor FakeFactor</ParamSetting>
   </Measurement>
 

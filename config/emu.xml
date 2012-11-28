@@ -29,7 +29,7 @@
       <OverallSys Name="MuonEff" Low="0.98" High="1.02"/>
       <OverallSys Name="EleEff" Low="0.98" High="1.02"/>
       <OverallSys Name="PDF" Low="0.983" High="1.017"/>
-      <NormFactor Name="SigXsecOverSM" Val="1" Low="0.5" High="1.8" Const="True" />
+      <NormFactor Name="TopCrossSection" Val="1" Low="0.5" High="1.8" Const="True" />
       <NormFactor Name="TopFactor" Val="200" Low="0.0" High="500.0" Const="True" />
     </Sample>
 

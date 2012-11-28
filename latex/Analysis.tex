@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+\usepackage{booktabs}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{color}
+
+\usepackage[hmargin=3cm,vmargin=1.5cm]{geometry}
+\title{ Insight Fellowship Interview}
+\author{ George Lewis }
+
+
+\begin{document}
+\maketitle
+
+
+\begin{center}
+  \begin{figure}[htbp]
+    \subfigure[$ee$]{\includegraphics[width=.45\linewidth]{../Plots/ee_default_Jet_N_0_6i_20GeV}}
+    \subfigure[$ee$ Fitted]{\includegraphics[width=.45\linewidth]{../Plots/ee_fitted}} \\
+    \subfigure[$e \mu$]{\includegraphics[width=.45\linewidth]{../Plots/emu_default_Jet_N_0_6i_20GeV}}
+    \subfigure[$e \mu$ Fitted]{\includegraphics[width=.45\linewidth]{../Plots/emu_fitted}} \\
+    \subfigure[$\mu \mu$]{\includegraphics[width=.45\linewidth]{../Plots/mumu_default_Jet_N_0_6i_20GeV}}
+    \subfigure[$\mu \mu$ Fitted]{\includegraphics[width=.45\linewidth]{../Plots/mumu_fitted}} \\
+    \caption{Each row of plots shows the measured number of jets in three non-overlapping sets of measured events. These event categories are defined by having either two electrons, two muons or an electron and a muon (in addition to other detailed selections).  The solid histograms in the three plots on the left represent the nominal estimates of the signal process being measured (in white with black outline) and various background processes that mimic the signal (colored histograms).  The three plots on the right show the same measured data, but the signal and background estimates have been fitted to the data, including the effects of systematic uncertainties.  }
+  \end{figure}
+\end{center}
+\clearpage
+\newpage
+
+
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[width=.70\linewidth]{../interval/IntervalPlot}
+    \caption{The posterior distribution of the cross-section of top-quark pair production.  This distribution was made by integrating over the effect of systematic uncertainties using Markov Chain Monte Carlo techniques (with a Metropolis-Hastings algorithm).  Shown are verticle lines indicating the central 95\% interval on the value of the cross-section using this posterior probability distribution.}
+  \includegraphics[width=.70\linewidth]{../Plots/ProfileLikelihood}
+    \caption{The likelihood (red, dashed) and Profile Likelihood(blue, solid) curves.  The Profile Likelihoood is defined as the likelihood function, as a function of a parameter of interest, evaluated at the point in the space of nuisance parameters that minimized the likelihood.  It is a frequentist construction based on the likelihood principle that takes allows one to make confidence intervals while taking into account the effects of systematic uncertainties.}
+  \end{center}
+\end{figure}
+\clearpage
+\newpage
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[width=.70\linewidth]{../interval/NuisancePlots}
+    \caption{Posterior distributions of each nuisance parameter and the top quark cross-section as obtained using Markov Chain Monte Carlo.}
+    \end{center}
+  \begin{center}
+    \includegraphics[width=.70\linewidth]{../interval/ProfileInspector}
+    \caption{The profiled value for each nuisance parameter as a function of the top quark cross-section.  The curves represent the value of that parameter that minimizes the likelihood as a function of the cross-section.}
+  \end{center}
+\end{figure}
+\clearpage
+\newpage
+
+\begin{table}[htbp]
+  \begin{center}
+    \begin{tabular}{|l|c|c|} \hline
+      Uncertainty source & Uncertainty (pb) & Percentage \\
+      \hline
+      \hline
+      Total & +0.145/-0.118 & +14.52\% / -11.82\% \\
+      \hline
+      Lumi &  +0.125/-0.098 & +12.51\% / -9.76\% \\
+      DY ee &  +0.004/-0.003 & +0.39\% / -0.29\% \\
+      DY mumu & +0.005/-0.003 & +0.46\% / -0.27\% \\
+      EleEff &  +0.023/-0.020 & +2.26\% / -1.96\% \\
+      FakeRate & +0.006/-0.002 & +0.59\% / -0.19\% \\
+      MuonEff & +0.025/-0.022 & +2.51\% / -2.16\% \\
+      PDF & +0.019/-0.016 & +1.90\% / -1.60\% \\
+      Xsec & +0.004/-0.004 & +0.39\% / -0.37\% \\
+      ees & +0.005/-0.003 & +0.48\% / -0.29\% \\
+      isrfsr & +0.008/-0.005 & +0.79\% / -0.47\% \\
+      jes & +0.015/-0.012 & +1.45\% / -1.22\% \\
+      mes & +0.005/-0.002 & +0.50\% / -0.22\% \\
+      met & +0.005/-0.002 & +0.48\% / -0.24\% \\
+      model &  +0.054/-0.046 & +5.38\% / -4.65\% \\
+      \hline
+    \end{tabular}
+  \end{center}
+  \caption{\label{tab:importantSystematics}
+    Dominant sources of systematic uncertainty in the full combined likelihood 
+    and their contribution to the error on the measured cross section.
+  }
+\end{table}
+
+
+
+
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[width=.95\linewidth]{../Plots/model_v2}
+  \end{center}
+\end{figure}
+\clearpage
+\newpage
+    
+
+\end{document}

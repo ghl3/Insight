@@ -29,7 +29,7 @@
       <OverallSys Name="model" High="1.05" Low="0.95"/>
       <OverallSys Name="EleEff" Low="0.96" High="1.04"/>
       <OverallSys Name="PDF" Low="0.978" High="1.022"/>
-      <NormFactor Name="SigXsecOverSM" Val="1" Low="0.5" High="3.0" Const="True" />
+      <NormFactor Name="TopCrossSection" Val="1" Low="0.5" High="3.0" Const="True" />
       <NormFactor Name="TopFactor" Val="200" Low="0.0" High="500.0" Const="True" />
     </Sample>
 
