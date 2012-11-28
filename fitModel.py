@@ -35,17 +35,13 @@ def main():
     model.graphVizTree("model.dot")
     result = model.fitTo( data, ROOT.RooCmdArg("Save", True) )
     corr_matrix = result.correlationMatrix()
-    corr_matrix.Print("V")
     cov_matrix = result.covarianceMatrix()
-    cov_matrix.Print("V")
-    return
 
     # Make the profile likelihood curve
     nll = model.createNLL(data)
     profile = nll.createProfile(ROOT.RooArgSet(poi))       
 
     # Draw and Save the Profile Likelihood
-    '''
     poi.setRange(0.4, 1.5)
     frame = poi.frame()
     ROOT.RooStats.HistFactory.FormatFrameForLikelihood(frame)
@@ -58,7 +54,6 @@ def main():
     ProfileLikelihoodCanvas = ROOT.TCanvas("canvas", "", 800,600)
     frame.Draw("goff");
     ProfileLikelihoodCanvas.Print("Plots/ProfileLikelihood.pdf")
-    '''
 
     # Print the results
     nav = ROOT.RooStats.HistFactory.HistFactoryNavigation(model, data)
@@ -76,25 +71,11 @@ def main():
         nav.DrawChannel(channel, data, True)
         canvas.Print("Plots/%s_fitted.pdf" % channel)
 
+    print "Covariance Matrix: "
+    cov_matrix.Print("V")
 
-    # Compare the unfitted plots to the fitted ones
-    '''
-    pm = top_plot_maker()
-    canvas = ROOT.TCanvas("Canvas", "Canvas")
-    canvas.Divide(3, 2)
-    objects_on_canvas = []
-    itr = 0
-    for channel in ['ee', 'emu', 'mumu']:
-        itr += 1
-        canvas.cd(itr)
-        input_name = hist_name(channel)
-        objects = pm.MakeMCDataStack(input_name, UseCurrentCanvas=True)
-        itr += 1
-        canvas.cd(itr)
-        nav.DrawChannel(channel, data, True)
-        objects_on_canvas.append(objects)
-    canvas.Print("Plots/All_Fitted.pdf")
-    '''
+    print "Correlation Matrix: "
+    corr_matrix.Print("V")
 
     return nav
 
